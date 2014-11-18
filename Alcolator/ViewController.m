@@ -8,27 +8,100 @@
 
 #import "ViewController.h"
 
-@interface ViewController ()
-@property (weak, nonatomic) IBOutlet UITextField *beerPercentTextField;
-@property (weak, nonatomic) IBOutlet UISlider *beerCountSlider;
-@property (weak, nonatomic) IBOutlet UILabel *resultLabel;
-@property (weak, nonatomic) IBOutlet UILabel *beerCount;
+@interface ViewController () <UITextFieldDelegate>
+
+@property (weak, nonatomic) UILabel *beerCount;
+@property (weak, nonatomic) UIButton *calculateButton;
+@property (weak, nonatomic) UITapGestureRecognizer *hideKeyboardTapGestureRecognizer;
 
 @end
 
 @implementation ViewController
 
+- (void)loadView {
+    self.view = [[UIView alloc] init];
+    
+    UITextField *textField = [[UITextField alloc] init];
+    UISlider *slider = [[UISlider alloc] init];
+    UILabel *label = [[UILabel alloc] init];
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] init];
+    
+    [self.view addSubview:textField];
+    [self.view addSubview:slider];
+    [self.view addSubview:label];
+    [self.view addSubview:button];
+    [self.view addGestureRecognizer:tap];
+    
+    self.beerPercentTextField = textField;
+    self.beerCountSlider = slider;
+    self.resultLabel = label;
+    self.calculateButton = button;
+    self.hideKeyboardTapGestureRecognizer = tap;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    self.view.backgroundColor = [ViewController colorFromHexString:@"#cec1e7"];
+    
+    self.beerPercentTextField.delegate = self;
+    UIView *paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 20)];
+    self.beerPercentTextField.leftView = paddingView;
+    self.beerPercentTextField.leftViewMode = UITextFieldViewModeAlways;
+    self.beerPercentTextField.placeholder = NSLocalizedString(@"% Alcohol Content Per Beer", @"Beer percent placeholder text");
+    self.beerPercentTextField.backgroundColor = [ViewController colorFromHexString:@"#ebe6f5"];
+    
+    [self.beerCountSlider addTarget:self action:@selector(sliderValueDidChange:) forControlEvents:UIControlEventValueChanged];
+    self.beerCountSlider.minimumValue = 1;
+    self.beerCountSlider.maximumValue = 10;
+    
+    [self.calculateButton addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [self.calculateButton setTitle:NSLocalizedString(@"Calculate", @"Calculate command") forState:UIControlStateNormal];
+    [self.calculateButton setTitleColor:[ViewController colorFromHexString:@"#3e2967"] forState:UIControlStateNormal];
+    self.calculateButton.titleLabel.font = [UIFont fontWithName:@"Arial" size:28];
+    
+    [self.hideKeyboardTapGestureRecognizer addTarget:self action:@selector(tapGestureDidFire:)];
+    self.resultLabel.numberOfLines = 0;
+    [self.resultLabel setFont:[UIFont fontWithName:@"Arial" size:20]];
+    self.resultLabel.textColor = [ViewController colorFromHexString:@"#e14169"];
     [self.beerPercentTextField becomeFirstResponder];
+}
+
+-(void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+    
+    CGSize viewSize = [self currentScreenSize];
+    CGFloat viewWidth = viewSize.width;
+    CGFloat padding = 20;
+    CGFloat itemWidth = viewWidth - padding - padding;
+    CGFloat itemHeight = 44;
+    
+    self.beerPercentTextField.frame = CGRectMake(padding, padding + 30, itemWidth, itemHeight);
+    
+    CGFloat bottomOfTextField = CGRectGetMaxY(self.beerPercentTextField.frame);
+    self.beerCountSlider.frame = CGRectMake(padding, bottomOfTextField + padding, itemWidth, itemHeight);
+    
+    CGFloat bottomOfSlier = CGRectGetMaxY(self.beerCountSlider.frame);
+    self.resultLabel.frame = CGRectMake(padding, bottomOfSlier + padding, itemWidth, itemHeight*4);
+    
+    CGFloat bottomOfLabel = CGRectGetMaxY(self.resultLabel.frame);
+    self.calculateButton.frame = CGRectMake(padding, bottomOfLabel + padding, itemWidth, itemHeight);
+    
+}
+
+-(CGSize)currentScreenSize {
+    CGSize screenSize = [UIScreen mainScreen].bounds.size;
+    if( (NSFoundationVersionNumber <= NSFoundationVersionNumber_iOS_7_1) && UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation)) {
+        return CGSizeMake(screenSize.height, screenSize.width);
+    }
+    return screenSize;
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-- (IBAction)textFieldDidChange:(UITextField *)sender {
+- (void)textFieldDidChange:(UITextField *)sender {
     NSString *enteredText = sender.text;
     float enteredNumber = [enteredText floatValue];
     
@@ -38,7 +111,7 @@
       [self updateResultLabelText];
     }
 }
-- (IBAction)sliderValueDidChange:(UISlider *)sender {
+- (void)sliderValueDidChange:(UISlider *)sender {
     NSLog(@"slider value changed to %f", sender.value);
     [self.beerPercentTextField resignFirstResponder];
     
@@ -53,14 +126,22 @@
     
     [self updateResultLabelText];
 }
-- (IBAction)buttonPressed:(UIButton *)sender {
+- (void)buttonPressed:(UIButton *)sender {
     [self.beerPercentTextField resignFirstResponder];
     
     [self updateResultLabelText];
     
 }
-- (IBAction)tapGestureDidFire:(UITapGestureRecognizer *)sender {
+- (void)tapGestureDidFire:(UITapGestureRecognizer *)sender {
     [self.beerPercentTextField resignFirstResponder];
+}
+
++ (UIColor *)colorFromHexString:(NSString *)hexString {
+    unsigned rgbValue = 0;
+    NSScanner *scanner = [NSScanner scannerWithString:hexString];
+    [scanner setScanLocation:1]; // bypass '#' character
+    [scanner scanHexInt:&rgbValue];
+    return [UIColor colorWithRed:((rgbValue & 0xFF0000) >> 16)/255.0 green:((rgbValue & 0xFF00) >> 8)/255.0 blue:(rgbValue & 0xFF)/255.0 alpha:1.0];
 }
 
 - (void)updateResultLabelText {
