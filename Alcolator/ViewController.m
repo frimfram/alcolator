@@ -65,6 +65,8 @@
     [self.resultLabel setFont:[UIFont fontWithName:@"Arial" size:20]];
     self.resultLabel.textColor = [ViewController colorFromHexString:@"#e14169"];
     [self.beerPercentTextField becomeFirstResponder];
+    
+    self.title = NSLocalizedString(@"Wine", @"wine");
 }
 
 -(void)viewWillLayoutSubviews {
@@ -76,16 +78,16 @@
     CGFloat itemWidth = viewWidth - padding - padding;
     CGFloat itemHeight = 44;
     
-    self.beerPercentTextField.frame = CGRectMake(padding, padding + 30, itemWidth, itemHeight);
+    self.beerPercentTextField.frame = CGRectMake(padding, padding + 50, itemWidth, itemHeight);
     
     CGFloat bottomOfTextField = CGRectGetMaxY(self.beerPercentTextField.frame);
-    self.beerCountSlider.frame = CGRectMake(padding, bottomOfTextField + padding, itemWidth, itemHeight);
+    self.beerCountSlider.frame = CGRectMake(padding, bottomOfTextField + 10, itemWidth, itemHeight);
     
     CGFloat bottomOfSlier = CGRectGetMaxY(self.beerCountSlider.frame);
-    self.resultLabel.frame = CGRectMake(padding, bottomOfSlier + padding, itemWidth, itemHeight*2);
+    self.resultLabel.frame = CGRectMake(padding, bottomOfSlier + 10, itemWidth, itemHeight*2);
     
     CGFloat bottomOfLabel = CGRectGetMaxY(self.resultLabel.frame);
-    self.calculateButton.frame = CGRectMake(padding, bottomOfLabel + padding, itemWidth, itemHeight);
+    self.calculateButton.frame = CGRectMake(padding, bottomOfLabel + 10, itemWidth, itemHeight);
     
 }
 
@@ -179,6 +181,8 @@
     NSString *resultText = [NSString stringWithFormat:NSLocalizedString(@"%d %@ contains as much alcohol as %.1f %@ of wine.", nil), numberOfBeers, beerText, numberOfWineGlassesForEquivalentAlcoholAmount, wineText];
     self.resultLabel.text = resultText;
     
+    NSString *navBarText = [NSString stringWithFormat:NSLocalizedString(@"Wine (%.1f %@)", nil), numberOfWineGlassesForEquivalentAlcoholAmount, wineText];
+    self.title = navBarText;
 }
 
 @end

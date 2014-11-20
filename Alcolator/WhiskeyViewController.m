@@ -14,6 +14,11 @@
 
 @implementation WhiskeyViewController
 
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.title = NSLocalizedString(@"Whiskey", @"whiskey");
+}
+
 - (void)updateResultLabelText {
     int numberOfBeers = self.beerCountSlider.value;
     int ouncesInOneBeerGlass = 12;
@@ -46,6 +51,9 @@
     
     NSString *resultText = [NSString stringWithFormat:NSLocalizedString(@"%d %@ contains as much alcohol as %.1f %@ of whiskey.", nil), numberOfBeers, beerText, numberOfWhiskeyGlassesForEquivalentAlcoholAmount, whiskeyText];
     self.resultLabel.text = resultText;
+    
+    NSString *navBarText = [NSString stringWithFormat:NSLocalizedString(@"Whisky (%.1f %@)", nil), numberOfWhiskeyGlassesForEquivalentAlcoholAmount, whiskeyText];
+    self.title = navBarText;
 }
 
 @end

@@ -13,6 +13,7 @@
 		022536351A197AF200FD7DF2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 022536341A197AF200FD7DF2 /* Images.xcassets */; };
 		022536381A197AF200FD7DF2 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 022536361A197AF200FD7DF2 /* LaunchScreen.xib */; };
 		022536441A197AF200FD7DF2 /* AlcolatorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 022536431A197AF200FD7DF2 /* AlcolatorTests.m */; };
+		0278C1491A1DB57200353C4F /* MainMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0278C1481A1DB57200353C4F /* MainMenuViewController.m */; };
 		027C348F1A1B3304000BA4A8 /* WhiskeyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 027C348E1A1B3304000BA4A8 /* WhiskeyViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -39,6 +40,8 @@
 		0225363D1A197AF200FD7DF2 /* AlcolatorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AlcolatorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		022536421A197AF200FD7DF2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		022536431A197AF200FD7DF2 /* AlcolatorTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AlcolatorTests.m; sourceTree = "<group>"; };
+		0278C1471A1DB57200353C4F /* MainMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainMenuViewController.h; sourceTree = "<group>"; };
+		0278C1481A1DB57200353C4F /* MainMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainMenuViewController.m; sourceTree = "<group>"; };
 		027C348D1A1B3304000BA4A8 /* WhiskeyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WhiskeyViewController.h; sourceTree = "<group>"; };
 		027C348E1A1B3304000BA4A8 /* WhiskeyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WhiskeyViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -91,6 +94,8 @@
 				022536271A197AF200FD7DF2 /* Supporting Files */,
 				027C348D1A1B3304000BA4A8 /* WhiskeyViewController.h */,
 				027C348E1A1B3304000BA4A8 /* WhiskeyViewController.m */,
+				0278C1471A1DB57200353C4F /* MainMenuViewController.h */,
+				0278C1481A1DB57200353C4F /* MainMenuViewController.m */,
 			);
 			path = Alcolator;
 			sourceTree = "<group>";
@@ -224,6 +229,7 @@
 				027C348F1A1B3304000BA4A8 /* WhiskeyViewController.m in Sources */,
 				0225362D1A197AF200FD7DF2 /* AppDelegate.m in Sources */,
 				0225362A1A197AF200FD7DF2 /* main.m in Sources */,
+				0278C1491A1DB57200353C4F /* MainMenuViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
