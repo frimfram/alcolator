@@ -18,6 +18,16 @@
 
 @implementation ViewController
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.title = NSLocalizedString(@"Wine", @"wine");
+        [self.tabBarItem setTitlePositionAdjustment:UIOffsetMake(0, -18)];
+    }
+    return self;
+}
+
 - (void)loadView {
     self.view = [[UIView alloc] init];
     
@@ -42,7 +52,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [ViewController colorFromHexString:@"#cec1e7"];
     
     self.beerPercentTextField.delegate = self;
     UIView *paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 20)];
@@ -66,7 +75,7 @@
     self.resultLabel.textColor = [ViewController colorFromHexString:@"#e14169"];
     [self.beerPercentTextField becomeFirstResponder];
     
-    self.title = NSLocalizedString(@"Wine", @"wine");
+    self.view.backgroundColor = [UIColor colorWithRed:0.741 green:0.925 blue:0.714 alpha:1];
 }
 
 -(void)viewWillLayoutSubviews {
@@ -116,6 +125,7 @@
 - (void)sliderValueDidChange:(UISlider *)sender {
     NSLog(@"slider value changed to %f", sender.value);
     [self.beerPercentTextField resignFirstResponder];
+    [self.tabBarItem setBadgeValue:[NSString stringWithFormat:@"%d", (int)sender.value]];
     
     int sliderValue = self.beerCountSlider.value;
     NSString *beerText = @"beers";
